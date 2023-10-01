@@ -61,7 +61,7 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:$koin_version")
 
     //OSM map
-    implementation("org.osmdroid:osmdroid-android:6.1.1")
+    implementation("org.osmdroid:osmdroid-android:6.1.17")
 
     androidTestImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
