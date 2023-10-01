@@ -1,27 +1,27 @@
 package com.example.osmlookout
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.example.osmlookout.databinding.ActivityMainBinding
+import com.example.osmlookout.util.PermissionManager
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy{
+        ActivityMainBinding.inflate(layoutInflater);
+    }
+
+    private val permissionManager : PermissionManager by inject { parametersOf(this@MainActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        if(!permissionManager.arePermissionsGranted())
+            permissionManager.requestPermissions()
 
+        setContentView(binding.root)
     }
 
 }
