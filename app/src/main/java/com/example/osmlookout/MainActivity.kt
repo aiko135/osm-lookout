@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy{
         ActivityMainBinding.inflate(layoutInflater);
     }
-
     private val permissionManager : PermissionManager by inject { parametersOf(this@MainActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

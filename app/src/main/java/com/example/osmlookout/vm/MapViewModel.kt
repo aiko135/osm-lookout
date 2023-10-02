@@ -8,7 +8,7 @@ import org.osmdroid.util.GeoPoint
 
 class MapViewModel : ViewModel() {
 
-    private val _center = MutableStateFlow<GeoPoint>(GeoPoint(55.769687, 37.597566))
-    val center: StateFlow<GeoPoint> = _center.asStateFlow()
+    private val _myPos = MutableStateFlow<GeoPoint>(GeoPoint(55.769687, 37.597566))
+    val myPos: StateFlow<GeoPoint> = _myPos.asStateFlow()
 
 }
