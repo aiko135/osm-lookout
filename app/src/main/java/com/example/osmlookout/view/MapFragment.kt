@@ -53,7 +53,10 @@ class MapFragment : Fragment() {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
             zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-            overlayManager = CustomOverlayManager(binding.map, requireActivity())
+            overlayManager = CustomMapManager(binding.map, requireActivity()){
+                //on map click
+                binding.standardBottomSheet.isVisible = false
+            }
             //Default values
             controller.setZoom(15.0)
             controller.setCenter(GeoPoint(55.769687, 37.597566))

@@ -7,8 +7,8 @@
     android:layout_width="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <org.osmdroid.views.MapView
             android:id="@+id/map"
@@ -19,47 +19,47 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/plus"
-                android:alpha="@dimen/alpha_buttons"
-                android:layout_marginTop="@dimen/space_between_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_buttons"
+                android:alpha="@dimen/alpha_buttons"
                 android:src="@mipmap/ic_zoom_plus_55dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/minus"
-                android:alpha="@dimen/alpha_buttons"
-                android:layout_marginTop="@dimen/space_between_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_buttons"
+                android:alpha="@dimen/alpha_buttons"
                 android:src="@mipmap/ic_zoom_minus_55dp"
-                app:layout_constraintTop_toBottomOf="@id/plus"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plus" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/mylocation"
-                android:alpha="@dimen/alpha_buttons"
-                android:layout_marginTop="@dimen/space_between_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_between_buttons"
+                android:alpha="@dimen/alpha_buttons"
                 android:src="@mipmap/ic_mylocation_55dp"
-                app:layout_constraintTop_toBottomOf="@id/minus"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/minus" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/nextracker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="@dimen/alpha_buttons"
                 android:layout_marginTop="@dimen/space_between_buttons"
+                android:alpha="@dimen/alpha_buttons"
                 android:src="@mipmap/ic_next_tracker_55dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mylocation" />

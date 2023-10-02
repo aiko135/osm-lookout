@@ -22,12 +22,14 @@ import org.osmdroid.views.overlay.Marker
 class CustomMarker : Marker {
 
     val markerData: MarkerData
+    val context:Context
 
     constructor(markerData: MarkerData, map: MapView, inflater: LayoutInflater) : super(map) {
         this.markerData = markerData
+        this.context = inflater.context
         this.position = GeoPoint(markerData.geoLat, markerData.geoLng)
         this.infoWindow = CustomInfoWindow(this, inflater, map)
-        this.icon = createCustomDrawable(inflater.context)
+        this.icon = createCustomDrawable(this.context)
         this.setAnchor(ANCHOR_CENTER, ANCHOR_BOTTOM)
     }
 
