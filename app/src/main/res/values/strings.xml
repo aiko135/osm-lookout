@@ -2,4 +2,8 @@
     <string name="app_name">OsmLookout</string>
     <string name="name">Name</string>
     <string name="info_default">GPS, ##:##</string>
+    <string name="gps">GPS</string>
+    <string name="date_default">##.##.##</string>
+    <string name="time_default">##:##</string>
+    <string name="view_history">Посмотреть историю</string>
 </resources>
