@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 class PermissionManager(
     private val activity: Activity,
 ) {
-    val RUNTIME_PERMISSIONS = arrayOf(
+    private val PERMISSIONS = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.INTERNET,
@@ -20,7 +20,7 @@ class PermissionManager(
     )
 
     fun arePermissionsGranted(): Boolean {
-        RUNTIME_PERMISSIONS.forEach{
+        PERMISSIONS.forEach{
             if (ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED)
                 return false
         }
@@ -29,7 +29,7 @@ class PermissionManager(
 
     fun requestPermissions() {
         var permsToRequest = mutableListOf<String>()
-        RUNTIME_PERMISSIONS.forEach {
+        PERMISSIONS.forEach {
             if (ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED) {
                 permsToRequest += it
             }
