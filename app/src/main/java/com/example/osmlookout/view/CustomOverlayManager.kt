@@ -6,12 +6,11 @@ import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.DefaultOverlayManager
 import org.osmdroid.views.overlay.TilesOverlay
 
-
 //made for DISABLE DOUBLE TAB gesture
 class CustomOverlayManager(
-    mapView:MapView,
-    ctx:Context
-): DefaultOverlayManager(
+    mapView: MapView,
+    ctx: Context
+) : DefaultOverlayManager(
     TilesOverlay(mapView.tileProvider, ctx)
 ) {
 
