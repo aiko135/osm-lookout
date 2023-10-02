@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OsmLookout</string>
+    <string name="name">Name</string>
+    <string name="info_default">GPS, ##:##</string>
 </resources>
