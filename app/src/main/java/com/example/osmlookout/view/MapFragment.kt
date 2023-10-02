@@ -26,6 +26,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.overlay.Marker
+import java.text.SimpleDateFormat
 
 
 class MapFragment : Fragment() {
@@ -112,10 +113,25 @@ class MapFragment : Fragment() {
             }
 
             marker.showInfoWindow()
-            binding.standardBottomSheet.isVisible = true
+            openBottomSheet(markerData)
             return@setOnMarkerClickListener true
         }
         binding.map.overlays.add(marker)
+    }
+
+    private fun openBottomSheet(markerData: MarkerData){
+        binding.standardBottomSheet.isVisible = true
+        binding.bottomSheet.run {
+            textViewName.text = markerData.name
+
+            val sfdDate = SimpleDateFormat("yyyy-MM-dd")
+            val dateStr: String = sfdDate.format(markerData.timestamp)
+            date.text = dateStr
+
+            val sfdTime = SimpleDateFormat("HH:mm")
+            val strTime: String = sfdTime.format(markerData.timestamp)
+            time.text = strTime
+        }
     }
 
 
