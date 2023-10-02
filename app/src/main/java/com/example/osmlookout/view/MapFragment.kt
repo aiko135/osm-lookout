@@ -79,12 +79,14 @@ class MapFragment : Fragment() {
                 binding.map.invalidate();
 
                 //My position marker - add common marker
-                val marker = Marker(binding.map)
-                marker.position = state.myPosition
-                marker.icon = ContextCompat.getDrawable(requireActivity(),com.example.osmlookout.R.mipmap.ic_my_tracker_46dp)
-                marker.infoWindow = null
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                binding.map.overlays.add(marker)
+                if (state.myPosition.latitude != 0.0 && state.myPosition.longitude != 0.0){
+                    val marker = Marker(binding.map)
+                    marker.position = state.myPosition
+                    marker.icon = ContextCompat.getDrawable(requireActivity(),com.example.osmlookout.R.mipmap.ic_my_tracker_46dp)
+                    marker.infoWindow = null
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    binding.map.overlays.add(marker)
+                }
 
                 //Peoples markers - add custom markers
                 state.markerData.forEach{ marker ->
