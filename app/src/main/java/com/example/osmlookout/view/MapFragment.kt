@@ -43,12 +43,7 @@ class MapFragment : Fragment() {
         val ctx = activity?.applicationContext
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
 
-        //Configure bottom menu -> not draggable bottom sheet
-        BottomSheetBehavior.from(binding.standardBottomSheet).apply {
-            isDraggable = false
-            state = BottomSheetBehavior.STATE_EXPANDED
-        }
-        binding.standardBottomSheet.isVisible = false
+        closeBottomSheet()
 
         binding.map.run {
             setTileSource(TileSourceFactory.MAPNIK)
@@ -56,7 +51,7 @@ class MapFragment : Fragment() {
             zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
             overlayManager = CustomMapManager(binding.map, requireActivity()){
                 //on map click
-                binding.standardBottomSheet.isVisible = false
+                closeBottomSheet()
             }
             //Default values
             controller.setZoom(15.0)
@@ -120,7 +115,10 @@ class MapFragment : Fragment() {
     }
 
     private fun openBottomSheet(markerData: MarkerData){
-        binding.standardBottomSheet.isVisible = true
+        BottomSheetBehavior.from(binding.standardBottomSheet).apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
         binding.bottomSheet.run {
             textViewName.text = markerData.name
 
@@ -131,6 +129,15 @@ class MapFragment : Fragment() {
             val sfdTime = SimpleDateFormat("HH:mm")
             val strTime: String = sfdTime.format(markerData.timestamp)
             time.text = strTime
+        }
+    }
+
+    private fun closeBottomSheet(){
+        BottomSheetBehavior.from(binding.standardBottomSheet).apply {
+            peekHeight = 0 //height in closed state is 0
+            isHideable = true
+            isDraggable = false
+            state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 
