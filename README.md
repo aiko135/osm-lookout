@@ -18,4 +18,5 @@
 <br/>
 minSdk 24<br/>
 targetSdk 34<br/>
-compileSdk 34<br/>
+![Screen of the app](https://github.com/aiko135/osm-lookout/blob/main/screenshot/Screenshot1.png "Screen")
+
