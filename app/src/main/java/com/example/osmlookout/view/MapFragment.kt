@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.domain.model.MarkerData
 import com.example.osmlookout.databinding.FragmentMapBinding
 import com.example.osmlookout.vm.MapViewModel
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -49,23 +50,23 @@ class MapFragment : Fragment() {
             setTileSource(TileSourceFactory.MAPNIK)
             setMultiTouchControls(true)
             zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-            overlayManager = CustomMapManager(binding.map, requireActivity()){
+            overlayManager = CustomMapManager(binding.map, requireActivity()) {
                 //on map click
                 closeBottomSheet()
             }
             //Default values
-            controller.setZoom(15.0)
+            controller.setZoom(13.0)
             controller.setCenter(GeoPoint(55.769687, 37.597566))
         }
 
         //Buttons
-        binding.plus.setOnClickListener{
+        binding.plus.setOnClickListener {
             binding.map.controller.setZoom(binding.map.zoomLevelDouble * 1.05)
         }
-        binding.minus.setOnClickListener{
+        binding.minus.setOnClickListener {
             binding.map.controller.setZoom(binding.map.zoomLevelDouble * 0.95)
         }
-        binding.mylocation.setOnClickListener{
+        binding.mylocation.setOnClickListener {
             getLocation()
         }
 
@@ -79,17 +80,20 @@ class MapFragment : Fragment() {
                 binding.map.invalidate();
 
                 //My position marker - add common marker
-                if (state.myPosition.latitude != 0.0 && state.myPosition.longitude != 0.0){
+                if (state.myPosition.latitude != 0.0 && state.myPosition.longitude != 0.0) {
                     val marker = Marker(binding.map)
                     marker.position = state.myPosition
-                    marker.icon = ContextCompat.getDrawable(requireActivity(),com.example.osmlookout.R.mipmap.ic_my_tracker_46dp)
+                    marker.icon = ContextCompat.getDrawable(
+                        requireActivity(),
+                        com.example.osmlookout.R.mipmap.ic_my_tracker_46dp
+                    )
                     marker.infoWindow = null
                     marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                     binding.map.overlays.add(marker)
                 }
 
                 //Peoples markers - add custom markers
-                state.markerData.forEach{ marker ->
+                state.markerData.forEach { marker ->
                     addCustomMarker(marker)
                 }
             }
@@ -105,8 +109,8 @@ class MapFragment : Fragment() {
         marker.setOnMarkerClickListener { marker, mapView ->
             //remove all previous infoWindows
             binding.map.overlays.forEach { overlay ->
-               if(overlay is Marker)
-                   overlay.infoWindow?.let { it.close() }
+                if (overlay is Marker)
+                    overlay.infoWindow?.let { it.close() }
             }
 
             marker.showInfoWindow()
@@ -116,7 +120,7 @@ class MapFragment : Fragment() {
         binding.map.overlays.add(marker)
     }
 
-    private fun openBottomSheet(markerData: MarkerData){
+    private fun openBottomSheet(markerData: MarkerData) {
         BottomSheetBehavior.from(binding.standardBottomSheet).apply {
             state = BottomSheetBehavior.STATE_EXPANDED
         }
@@ -134,7 +138,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun closeBottomSheet(){
+    private fun closeBottomSheet() {
         BottomSheetBehavior.from(binding.standardBottomSheet).apply {
             peekHeight = 0 //height in closed state is 0
             isHideable = true
@@ -143,18 +147,42 @@ class MapFragment : Fragment() {
         }
     }
 
-
-    //request my geolocation
     @SuppressLint("MissingPermission")
-    private fun getLocation(){
+    private fun getLocation() {
+        //modern API call
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                location?.let {
+                    viewModel.updateMyPos(it.latitude, it.longitude)
+                    binding.map.controller.setCenter(
+                        GeoPoint(
+                            it.latitude,
+                            it.longitude
+                        )
+                    )
+                }
+            }
+            .addOnFailureListener {
+                getLocationLegacyApi()
+            }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocationLegacyApi(){
         try {
             val lm = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val hasGps = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            if(hasGps){
+            if (hasGps) {
                 val gpsLocationListener: LocationListener = object : LocationListener {
                     override fun onLocationChanged(location: Location) {
-                        viewModel.updateMyPos(location.latitude,location.longitude)
-                        binding.map.controller.setCenter(GeoPoint(location.latitude,location.longitude))
+                        viewModel.updateMyPos(location.latitude, location.longitude)
+                        binding.map.controller.setCenter(
+                            GeoPoint(
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
                         lm.removeUpdates(this)
                     }
 
@@ -168,15 +196,12 @@ class MapFragment : Fragment() {
                     1F,
                     gpsLocationListener
                 )
-            }
-            else{
+            } else {
                 throw NoSuchElementException()
             }
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
             Toast.makeText(requireActivity(), "Cannot get your location", Toast.LENGTH_LONG).show()
         }
-
     }
 
 }
