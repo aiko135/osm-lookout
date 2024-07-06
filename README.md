@@ -2,6 +2,8 @@
 
 Приложение представляет собой демо пример с использованием OSM карты.<br/>
 
+![Screen of the app](https://github.com/aiko135/osm-lookout/blob/main/screenshot/Screenshot1.png "Screen")
+
 Приложение позволяет:<br/>
 Просматривать карту<br/>
 Отдалять и приближать карту на кнопки или жестом ZOOM (двумя пальцами)<br/>
@@ -18,5 +20,5 @@
 <br/>
 minSdk 24<br/>
 targetSdk 34<br/>
-![Screen of the app](https://github.com/aiko135/osm-lookout/blob/main/screenshot/Screenshot1.png "Screen")
+
 
